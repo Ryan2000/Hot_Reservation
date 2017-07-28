@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
     <script src=/index.js></script>
+    <script src=/app.js></script>
 </head>
 <body>
 
@@ -59,7 +59,7 @@
                             <input type="text" class="form-control" id="reserve_uniqueID">
                         </div>
 
-                        <button type="submit" class="btn btn-primary submit">Submit</button>
+                        <button id="select_link" type="button" class="btn btn-primary submit">Submit</button>
                     </form>
 
                 </div>
@@ -76,6 +76,34 @@
     </footer>
 
 </div>
+<script>
+    $( document ).ready(function() {
 
+        $('#select_link').click(function(e){
+            //alert("got clicked");
+            e.preventDefault();
+            //console.log('select_link clicked');
+
+            var data = {};
+            data.id = $("#reserve_uniqueID").val();
+            data.name = $("#reserve_name").val();
+            data.email = $("#reserve_email").val();
+            data.phone = $("#reserve_phone").val();
+
+            console.log(JSON.stringify(data));
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/submit',
+                success: function(data) {
+                    console.log('success');
+                    console.log(JSON.stringify(data));
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
